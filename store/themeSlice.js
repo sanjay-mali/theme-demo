@@ -29,13 +29,16 @@ const themes = {
 };
 
 const getInitialTheme = () => {
-  const savedTheme = localStorage.getItem("selectedTheme");
-  return savedTheme ? savedTheme : "system"; 
+  if (typeof window !== "undefined") {
+    const savedTheme = localStorage.getItem("selectedTheme");
+    return savedTheme ? savedTheme : "system";
+  }
+  return "system";
 };
 
 const initialState = {
   selectedTheme: getInitialTheme(),
-  appliedTheme: themes.light, 
+  appliedTheme: themes.light,
   themes,
 };
 
@@ -53,7 +56,10 @@ const themeSlice = createSlice({
       } else {
         state.appliedTheme = state.themes[action.payload];
       }
-      localStorage.setItem("selectedTheme", action.payload);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("selectedTheme", action.payload);
+      }
     },
     applySystemTheme: (state) => {
       const systemPrefersDark = window.matchMedia(
