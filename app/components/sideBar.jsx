@@ -74,9 +74,6 @@ const Main = () => {
           </Radio.Group>
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        ©{new Date().getFullYear()} Created by Sanjay Mali
-      </Footer>
     </>
   );
 };
