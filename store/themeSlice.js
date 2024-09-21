@@ -38,7 +38,7 @@ const getInitialTheme = () => {
 
 const initialState = {
   selectedTheme: getInitialTheme(),
-  appliedTheme: themes.light,
+  appliedTheme: getInitialTheme() || "system",
   themes,
 };
 

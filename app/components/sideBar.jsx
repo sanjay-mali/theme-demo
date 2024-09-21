@@ -1,38 +1,49 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Radio, Row, Col, Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme, applySystemTheme } from "@/store/themeSlice";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const Main = () => {
   const dispatch = useDispatch();
-  const { selectedTheme, appliedTheme, themes } = useSelector(
-    (state) => state.theme
-  );
+  const { appliedTheme, themes } = useSelector((state) => state.theme);
+
+  const [selectedTheme, setSelectedThemeState] = useState(null);
 
   useEffect(() => {
-    if (selectedTheme === "system") {
+    const savedTheme = localStorage.getItem("selectedTheme");
+    if (savedTheme) {
+      setSelectedThemeState(savedTheme);
+      dispatch(setTheme(savedTheme));
+    } else {
       dispatch(applySystemTheme());
     }
-  }, [dispatch, selectedTheme]);
+  }, [dispatch]);
+
+  const handleThemeChange = (e) => {
+    const newTheme = e.target.value;
+    setSelectedThemeState(newTheme);
+    dispatch(setTheme(newTheme));
+    localStorage.setItem("selectedTheme", newTheme);
+  };
 
   return (
     <>
       <Header
         style={{
           padding: 0,
-          background: appliedTheme?.colorBgBase || "#fff",
+          background: appliedTheme?.colorBgBase || "#fff ",
           color: appliedTheme?.colorTextBase || "#000",
         }}
       />
       <Content style={{ overflow: "initial" }}>
         <div
           style={{
-            backgroundColor: appliedTheme?.colorBgBase || "#fff",
-            color: appliedTheme?.colorTextBase || "#000",
+            backgroundColor: appliedTheme?.colorBgBase,
+            color: appliedTheme?.colorTextBase,
             minHeight: "100vh",
             padding: "16px",
             textAlign: "center",
@@ -40,17 +51,14 @@ const Main = () => {
         >
           <h2
             style={{
-              backgroundColor: appliedTheme?.colorBgBase || "#fff",
-              color: appliedTheme?.colorTextBase || "#000",
+              backgroundColor: appliedTheme?.colorBgBase,
+              color: appliedTheme?.colorTextBase,
               paddingBottom: "12px",
             }}
           >
             Select Themes
           </h2>
-          <Radio.Group
-            onChange={(e) => dispatch(setTheme(e.target.value))}
-            value={selectedTheme} 
-          >
+          <Radio.Group onChange={handleThemeChange} value={selectedTheme}>
             <Row gutter={16}>
               <Col>
                 <Card
@@ -73,10 +81,10 @@ const Main = () => {
                         textAlign: "center",
                         backgroundColor: "#fff",
                         color: "#fff",
-                        borderColor: appliedTheme?.borderColor || "#000",
+                        borderColor: appliedTheme?.borderColor,
                       }}
                     >
-                      <Radio value={key}>{key.replace(/-/g, " ")}</Radio>
+                      <Radio value={key}>{key}</Radio>
                     </Card>
                   </Col>
                 ))}
@@ -84,9 +92,6 @@ const Main = () => {
           </Radio.Group>
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        ©{new Date().getFullYear()} Created by Sanjay Mali
-      </Footer>
     </>
   );
 };
