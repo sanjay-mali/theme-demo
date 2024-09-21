@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { Layout, Radio, Row, Col, Card } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme, applySystemTheme } from "@/store/themeSlice"; // Import Redux actions
+import { setTheme, applySystemTheme } from "@/store/themeSlice";
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,7 +14,6 @@ const Main = () => {
   );
 
   useEffect(() => {
-    // Apply the system theme if 'system' is selected
     if (selectedTheme === "system") {
       dispatch(applySystemTheme());
     }
@@ -50,7 +49,7 @@ const Main = () => {
           </h2>
           <Radio.Group
             onChange={(e) => dispatch(setTheme(e.target.value))}
-            value={selectedTheme} // Ensure the correct radio button is selected
+            value={selectedTheme} 
           >
             <Row gutter={16}>
               <Col>

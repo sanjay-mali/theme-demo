@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Define your theme data
 const themes = {
   light: {
     colorPrimary: "#1890ff",
@@ -29,16 +28,15 @@ const themes = {
   },
 };
 
-// Retrieve theme from localStorage
 const getInitialTheme = () => {
   const savedTheme = localStorage.getItem("selectedTheme");
-  return savedTheme ? savedTheme : "system"; // Default to 'system' if no saved theme
+  return savedTheme ? savedTheme : "system"; 
 };
 
 const initialState = {
   selectedTheme: getInitialTheme(),
-  appliedTheme: themes.light, // Default applied theme
-  themes, // Include themes in the state
+  appliedTheme: themes.light, 
+  themes,
 };
 
 const themeSlice = createSlice({
@@ -55,7 +53,6 @@ const themeSlice = createSlice({
       } else {
         state.appliedTheme = state.themes[action.payload];
       }
-      // Save selected theme to localStorage
       localStorage.setItem("selectedTheme", action.payload);
     },
     applySystemTheme: (state) => {
