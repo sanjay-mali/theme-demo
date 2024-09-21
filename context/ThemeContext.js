@@ -31,16 +31,18 @@ const themes = {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [selectedTheme, setSelectedTheme] = useState("system");
+  const [selectedTheme, setSelectedTheme] = useState(
+    localStorage.getItem("selectedTheme") || "system"
+  );
   const [appliedTheme, setAppliedTheme] = useState(themes.light);
 
   const updateTheme = () => {
     if (selectedTheme === "system") {
-      setAppliedTheme(
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? themes.dark
-          : themes.light
-      );
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? themes.dark
+        : themes.light;
+      setAppliedTheme(systemTheme);
     } else {
       setAppliedTheme(themes[selectedTheme]);
     }
@@ -48,6 +50,8 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     updateTheme();
+
+    localStorage.setItem("selectedTheme", selectedTheme);
 
     const handleSystemThemeChange = (e) => {
       if (selectedTheme === "system") {

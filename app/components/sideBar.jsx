@@ -1,46 +1,11 @@
 "use client";
 
 import React from "react";
-import { Layout, Menu, Radio, Row, Col, Card } from "antd";
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { Layout, Radio, Row, Col, Card } from "antd";
+
 import { useTheme } from "@/context/ThemeContext";
 
-const { Header, Content, Footer, Sider } = Layout;
-
-const nav = [
-  "User",
-  "Support",
-  "Downloads",
-  "Analytics",
-  "Cloud",
-  "Apps",
-  "Users",
-  "Theme",
-];
-
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  AppstoreOutlined,
-  TeamOutlined,
-  ShopOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `${nav[index]}`,
-}));
+const { Header, Content, Footer } = Layout;
 
 const Main = () => {
   const { selectedTheme, setSelectedTheme, appliedTheme, themes } = useTheme();
