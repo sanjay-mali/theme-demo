@@ -54,7 +54,7 @@ const Main = () => {
           color: appliedTheme.colorTextBase,
         }}
       />
-      <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+      <Content style={{ overflow: "initial" }}>
         <div
           style={{
             backgroundColor: appliedTheme.colorBgBase,
@@ -68,7 +68,7 @@ const Main = () => {
             style={{
               backgroundColor: appliedTheme.colorBgBase,
               color: appliedTheme.colorTextBase,
-              paddingBottom: '12px'
+              paddingBottom: "12px",
             }}
           >
             Select Themes
